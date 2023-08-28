@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>Smooth Background Color Transition on Scroll</title>
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    height: 200vh; /* Set a height to enable scrolling */
+    background-image: linear-gradient(40deg, #1fa0ff, #12dafb, #a7fdcc); /* Default background color */
+    transition: background-color 0.5s ease; /* Add a smooth transition effect */
+}
+
+/* Add your other CSS styles here */
+
+    </style>
+</head>
+<body>
+    <!-- Content of your webpage goes here -->
+</body>
+<script >
+    // Get a reference to the body element
+const body = document.body;
+
+// Set initial background color and scroll position
+let lastScrollTop = 0;
+let bgColor = "#3498db"; // Default color
+
+// Add an event listener for the scroll event
+window.addEventListener("scroll", () => {
+    // Get the current scroll position
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Calculate the scroll direction
+    const scrollDirection = currentScrollTop > lastScrollTop ? "down" : "up";
+
+    // Set colors for scroll up and down
+    const scrollUpColor =   body.style.background = "linear-gradient(40deg, #FFCC70, #C850c0, #4158D0)";
+    const scrollDownColor =  body.style.background = "linear-gradient(40deg, #1fa0ff, #12dafb, #a7fdcc)";
+
+    // Determine the background color based on scroll direction
+    bgColor = scrollDirection === "down" ? scrollDownColor : scrollUpColor;
+
+    // Update the background color
+    body.style.backgroundColor = bgColor;
+
+    // Store the current scroll position for the next comparison
+    lastScrollTop = currentScrollTop;
+});
+
+</script>
+</html>
