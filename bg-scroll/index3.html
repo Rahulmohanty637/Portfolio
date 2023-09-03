@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <style>
+        body{
+            opacity: 0;
+        }
+    </style> -->
+</head>
+<body>
+   <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt odio officia provident id iusto impedit voluptates, accusamus optio ipsam aliquam ea asperiores deleniti vitae dolore eius. Iure voluptate odit illo ad? Dolores deleniti ducimus hic vero molestias corrupti. Distinctio fugit explicabo quos iusto ullam vero totam maiores sit commodi blanditiis asperiores, repudiandae, eaque dolorum a nemo inventore, mollitia ipsa natus possimus maxime praesentium magnam corporis atque! Modi non eligendi vero delectus optio amet id unde iusto nisi quis quo sequi autem quasi facere, dolorem neque impedit a magni natus, deleniti ipsum minus, tenetur ab? Enim, error eius, ratione accusamus laborum, ducimus distinctio accusantium quidem commodi tempore ipsam obcaecati suscipit inventore excepturi consequuntur temporibus eligendi quia mollitia ea quasi doloribus voluptatibus! Cumque repudiandae eaque perferendis dolorum incidunt quod. Nam distinctio repellat quaerat amet quidem aliquam mollitia consequuntur, rerum repellendus reprehenderit inventore iusto porro voluptatum cum aspernatur molestiae nemo obcaecati nesciunt aliquid eveniet. Inventore esse asperiores error necessitatibus ut. Sequi quibusdam enim incidunt suscipit quasi id magni eligendi ratione eum quod recusandae amet sint sunt iste, quam earum assumenda natus iure tenetur magnam perferendis. Architecto neque eum obcaecati voluptatibus ullam nisi illo placeat reiciendis qui. Fugit harum ea alias asperiores, rerum odio laboriosam officia laudantium assumenda debitis doloribus dolorem itaque blanditiis ex? Incidunt cum ipsum quasi fugiat porro est in ratione, nam magnam explicabo, odio laborum qui, amet ab excepturi cumque blanditiis. Quia facere libero velit aliquam ea dignissimos voluptatibus iste perferendis incidunt veritatis laborum optio hic ab porro inventore, odit ipsa officiis! Accusamus alias expedita sunt sed nemo, atque consequatur hic consequuntur rem. Labore placeat odit quos tempora exercitationem aliquid. Fuga quasi suscipit nobis quo atque eaque doloribus vero temporibus, iure autem reprehenderit deserunt, unde distinctio ipsam velit harum repellendus necessitatibus deleniti doloremque amet ad. Dolorum accusamus error at minima sed.</p> 
+</body>
+<script>
+
+    var $ = jQuery,
+            selector = '[data-elementor-type="wp-page"] > .elementor-element, [data-elementor-type="header"] > .elementor-element, [data-elementor-type="footer"] > .elementor-element'
+    
+    $(window).on('load', function(){
+    
+    $(selector + ', .sb-color > .elementor-element').each(function(){
+        var color
+        
+        if($(this).css('background-color') != 'rgba(0, 0, 0, 0)'){
+            color = $(this).css('background-color')
+        }else{
+            color = $('body').css('background-color')
+        }
+    
+        $(this).attr('data-color', color)
+        $(this).css('background-color', 'rgba(0, 0, 0, 0)')
+    })
+    
+    setTimeout(function(){
+        $('body').addClass('loading')
+    }, 200)
+    setTimeout(function(){
+        $('body').addClass('loaded')
+    }, 300)
+    })
+    
+    var changing = false
+    
+    function encodeClass(color){
+        console.log(color)
+        return color.replace(/, /g, '-').replace('(', 'c').replace('.', 'd').replace(')', 'e')
+    }
+    function decodeClass(className){
+        return className.replace(/-/g, ', ').replace('c', '(').replace('d', '.').replace('e', ')')
+    }
+    
+    $(window).on('load scroll resize', function(){
+        
+    changing = true
+        
+    var lastVisible = $('[data-elementor-type="wp-page"] > .elementor-element').eq(0),
+            bottomOffset = 200,
+            startFrom = 200
+    
+    if( $(window).width() < 768 ){
+        bottomOffset = 100
+    }
+        
+    $(selector).each(function(){
+        
+            var top_of_element = $(this).offset().top,
+            bottom_of_element = $(this).offset().top + $(this).outerHeight(),
+            bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
+            top_of_screen = $(window).scrollTop()
+            
+            if ((bottom_of_screen - bottomOffset > top_of_element) && (top_of_screen < bottom_of_element)){
+                lastVisible = $(this)
+            }
+    })
+    
+    if($(window).scrollTop() < startFrom){
+        lastVisible = $('[data-elementor-type="wp-page"] > .elementor-element').eq(0)
+    }
+    $('body').addClass('changing').css('background-color', lastVisible.attr('data-color'))
+        
+    setTimeout(function(){
+        if(!changing){
+                $('body').removeClass('changing')		 
+        }
+        changing = false
+    }, 800+100)
+    
+    var classList = document.querySelector('body').className.split(' ')
+    classList.forEach(function(className){
+        if( className.startsWith('rgbc') || className.startsWith('rgbac') ) {
+            $('body').removeClass(className)
+        }
+    })
+    
+    var currentClass = encodeClass(lastVisible.attr('data-color'))
+    
+    $('body').addClass(currentClass)
+        
+    $('.sb-color > .elementor-element').removeClass('show')
+    $('.sb-color').each(function(){
+        
+        var found = false
+        $(this).children('.elementor-element').each(function(){
+                if( encodeClass($(this).attr('data-color')) == currentClass ){
+                        $(this).addClass('show')
+                        found = true
+                }
+        })
+        if(!found){
+            $(this).children('.elementor-element').eq(0).addClass('show')
+        }
+    })
+    
+    })
+    
+    </script>
+    <style>
+        body.loading{
+            opacity: 1;
+        }
+        body.loaded{
+            --g-transition: 0.8s;	
+        }
+        body,
+        body .elementor-widget,
+        body .elementor-widget > *{
+            transition: all var(--g-transition) ease-in-out !important;
+        }
+        .sb-color > *{
+            opacity: 0;
+            pointer-events: none;
+            transition: all var(--g-transition) ease-in-out !important;
+        }
+        .sb-color > *.show{
+            opacity: 1;
+            pointer-events: unset;
+        }
+    </style>
+</html>

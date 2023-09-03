@@ -1,0 +1,7 @@
+.scroll-section {
+  height: 100vh; /* Adjust as needed */
+  background-color: #1fa0ff; /* Default background color */
+  transition: background-color cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Add your other CSS styles here */
