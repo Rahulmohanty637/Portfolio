@@ -1,7 +1,17 @@
-.scroll-section {
-  height: 100vh; /* Adjust as needed */
-  background-color: #1fa0ff; /* Default background color */
-  transition: background-color cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.scrolling-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Make it cover the entire viewport height */
+  background-color: #b5c1ca; /* Initial background color */
+  z-index: -1; /* Place it behind other content */
+  transition: background-color 0.5s; /* Smooth color transition */
+
+  /* height: 100vh; /* Adjust as needed */
+  /* background-color: #1fa0ff;  */
+  /* Default background color */
+  /* transition: background-color cubic-bezier(0.175, 0.885, 0.32, 1.275);  */
 }
 
 /* Add your other CSS styles here */

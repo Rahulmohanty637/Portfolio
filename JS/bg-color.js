@@ -1,24 +1,9 @@
-const section = document.querySelector(".scroll-section");
+const scrollingDiv = document.querySelector('.scrolling-div');
 
-    // Set initial background color and scroll position
-    let lastScrollTop = 300;
-    let bgColor = "#1fa0ff"; // Default color
+window.addEventListener('scroll', () => {
+    // Calculate the scroll position as a percentage of the page height
+    const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
 
-    // Add an event listener for the scroll event on the specific section
-    window.addEventListener("scroll", () => {
-      // Get the current scroll position
-      const currentScrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-
-      // Check if scrolling up or down
-      if (currentScrollTop > lastScrollTop) {
-        // Scrolling down, change the section's background color
-        section.style.backgroundColor = "#FFCC70";
-      } else {
-        // Scrolling up, change the section's background color
-        section.style.backgroundColor = "#1fa0ff";
-      }
-
-      // Store the current scroll position for the next comparison
-      lastScrollTop = currentScrollTop;
-    });
+    // Set the background color based on the scroll percentage
+    scrollingDiv.style.backgroundColor = `#1fa0ff(${scrollPercentage}, 50%, 50%)`;
+});
