@@ -268,7 +268,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100px;
+    height: 150px;
     padding: 0 20px;
     border-top: 2px solid #dadada;
 }
@@ -282,5 +282,5 @@ html, body {
 footer{
     height: 90vh;
     width: 100%;
-    background-color: #EDBFFF;
+    background-color: #0F0D0D;
 }
